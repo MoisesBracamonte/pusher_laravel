@@ -19,10 +19,10 @@ class MessageSent implements ShouldBroadcast
      *
      * @return void
      */
-    public $messages;
+    public $message;
     public function __construct($message)
     {
-        $this->messages = $message;
+        $this->message = $message;
     }
 
     /**

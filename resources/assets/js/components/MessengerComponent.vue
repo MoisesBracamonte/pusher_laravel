@@ -8,6 +8,7 @@
     <div class="col-md-7">
         <conversacion-component
           v-if="selectConversation"
+          :messages="messages"
           :contact-id="selectConversation.contact_id"
         ></conversacion-component>
     </div>
@@ -23,25 +24,41 @@
 import ContactListComponent from './ContactListComponent.vue';
 import SideListComponent from './SideListComponent.vue';
 export default {
+  props : {
+    userId : Number
+  },
   components:{
     ContactListComponent : 'contactlist-component',
     SideListComponent : 'sidelist-component'
   },
-  data:function(){
+  data(){
     return{
-      selectConversation: null
+      selectConversation: null,
+      messages:[]
     }
   },
-  mounted:function(){
+  mounted(){
+    let self  = this;
     Echo.channel('example')
-    .listen('MessageSent',function(e){
-        console.log(e);
+    .listen('MessageSent',function(data){
+      let m = data.message;
+      m.written_by_me = (self.userId == m.from_id)
+      self.messages.push(m);
     });
   },
   methods:{
-    changeConversation:function(conversation){
+    changeConversation(conversation){
       this.selectConversation = conversation
-    }
+      this.getMessages();
+    },
+    getMessages(){
+        axios.get(`/api/messages?contact_id=${this.selectConversation.contact_id}`)
+        .then(response => {
+            this.messages = response.data;
+        }).catch(error => {
+            console.log(error);
+        })
+    },
   }
 }
 </script>

@@ -23,6 +23,13 @@
     </div>
 </div>
 </template>
+<style>
+.conver{
+    max-height: 590px;
+    overflow-y: scroll;
+}
+</style>
+
 <script>
 import axios from 'axios';
 import MessageComponent from './MessageComponent.vue';
@@ -31,34 +38,23 @@ export default {
         MessageComponent
     },
     props:{
-        contactId : Number
+        messages:Array,
+        contactId :Number
     },
-    data:function(){
+    data(){
         return{
-            messages : [],
-            message : '',
+            message:''
         }
     },
-    mounted:function(){
-        this.getMessages()
-    },
-    watch : {
-        contactId:function(identity){
-            console.log("CONTACT ID => "+identity);
-            this.getMessages()
+    watch:{
+        messages(){
+            setTimeout(() => {
+                this.scrollBottom()
+            }, 200);
         }
     },
     methods:{
-        getMessages:function(){
-            axios.get(`/api/messages?contact_id=${this.contactId}`)
-            .then(response => {
-                this.messages = response.data;            
-            }).catch(error => {
-                console.log(error);
-            })
-        },
-
-        postMessage:function(){
+        postMessage(){
             let myForm = document.getElementById('form-message');
             let formData = new FormData(myForm);
             formData.append('to_id',this.contactId);
@@ -66,12 +62,14 @@ export default {
             .then(response=>{
                 if(response.statusText == 'OK'){
                     this.message='';
-                    this.getMessages();      
                 }
             }).catch(error=>{
                 console.log(error);
             })
-            
+        },
+        scrollBottom:function(){
+            let element = document.querySelector('.conver');
+            element.scrollTop = element.scrollHeight;            
         }
     }
   
