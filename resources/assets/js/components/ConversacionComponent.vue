@@ -61,7 +61,10 @@ export default {
             axios.post(`/api/messages`,formData)
             .then(response=>{
                 if(response.statusText == 'OK'){
+                    let m = response.data;
                     this.message='';
+                    m.written_by_me = true;
+                    this.$emit('createdMessage',m)
                 }
             }).catch(error=>{
                 console.log(error);

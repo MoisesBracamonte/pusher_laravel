@@ -9,7 +9,7 @@
             <small id="" class="form-text text-muted" >{{conversation.last_message}}</small>
         </div>
         <div class="col-md-3 col-sm-3 d-none d-md-block">
-            <small id="" class="form-text text-muted float-right">{{conversation.last_time}}</small>
+            <small id="" class="form-text text-muted float-right">{{lastTime}}</small>
         </div>
     </div>
 </div>
@@ -20,6 +20,10 @@
             variant: String,
             conversation : Object
         },
-        data:function(){ return{ } }
+        computed:{
+            lastTime:function(){
+                return moment(this.conversation.last_time,"YYYY-MM-DD hh:ms:ss").locale('es').fromNow();
+            }
+        }
     }
 </script>

@@ -32,6 +32,11 @@ class MessageSent implements ShouldBroadcast
      */
     public function broadcastOn()
     {
-        return new Channel('example');
+        /*
+            * De esta forma llegan las peticiones a todos los usuarios 
+            * return new Channel('example');
+        */
+        /* De esta otra cada usuario tendra un canal especifico de modo que le llegaran unicamente los mensajes que son enviado a travez de su canal*/
+        return new PrivateChannel('users.'.$this->message->to_id);
     }
 }
