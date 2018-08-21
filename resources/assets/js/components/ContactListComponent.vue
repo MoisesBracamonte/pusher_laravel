@@ -1,6 +1,5 @@
 <template>
   <div>
-      <BuscadorComponent></BuscadorComponent>
       <ContactComponent
         v-for="(conversation,key) in conversations"
         :key="key"
@@ -14,14 +13,12 @@
 <script>
 import axios from 'axios';
 import ContactComponent from './ContactComponent';
-import BuscadorComponent from './BuscadorComponent';
 export default {
   props:{
     conversations:Array
   },
   components : {
     ContactComponent,
-    BuscadorComponent
   },
   methods:{
     selectConversation:function(conversation){

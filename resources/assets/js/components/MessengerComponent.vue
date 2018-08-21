@@ -1,9 +1,14 @@
 <template>
 <div class="row">
     <div class="col-md-3 list-contactos list-group list-group-flush">
+        <form class="m-0">
+          <div class="list-group-item">
+            <input type="text" class="form-control input-buscar mt-1" placeholder="Buscar" v-model="myfilter">
+          </div>
+        </form>
         <contactlist-component 
           v-on:selectConversation="changeConversation($event)"
-          :conversations="conversations">
+          :conversations="conversationsFilter">
         </contactlist-component>
     </div>
     <div class="col-md-7">
@@ -31,15 +36,18 @@ export default {
   },
   components:{
     ContactListComponent : 'contactlist-component',
-    SideListComponent : 'sidelist-component'
+    SideListComponent : 'sidelist-component',
+
   },
   data(){
     return{
       selectConversation: null,
       messages:[],
       conversations:[],
+      myfilter:''
     }
   },
+
   mounted(){
     this.getConversation();
     let self  = this;
@@ -48,7 +56,22 @@ export default {
       data.written_by_me = false;
         self.addMessage(data.message);
     });
+    Echo.join(`messenger`)
+      .here((users) => { // Que usuario esta presente
+        users.forEach(e => self.changeOnline(e,true))
+      })
+      .joining((user) => { // Que usuario acaba de ingresar
+        self.changeOnline(user,true)
+      }) 
+      .leaving((user) => { // Que usuario acaba de salir
+        self.changeOnline(user,false)
+      });
   },
+    computed:{
+      conversationsFilter:function(){
+        return this.conversations.filter((conversation) => conversation.contact_name.includes(this.myfilter) )
+      }
+    },
   methods:{
     changeConversation(conversation){
       this.selectConversation = conversation
@@ -87,7 +110,14 @@ export default {
         console.log(error);
       })
     },
-
+    changeOnline:function(user,status){
+      let index = this.conversations.findIndex(element =>{
+        return element.contact_id == user.id
+      });
+      if(index >= 0){
+        this.$set(this.conversations[index],'online',status)
+      }
+    }
   }
 }
 </script>

@@ -5,6 +5,7 @@
             <img src="https://picsum.photos/200/300" class="rounded-circle img-cont" alt="">
         </div>
         <div class="col-md-6  col-sm-6 d-none d-md-block">
+            <span :class="[conversation.online ? 'text-success' : 'text-danger']">&#8226;</span>
             <span>{{conversation.contact_name}}</span>
             <small id="" class="form-text text-muted" >{{conversation.last_message}}</small>
         </div>
@@ -18,7 +19,7 @@
     export default {
         props:{
             variant: String,
-            conversation : Object
+            conversation : Object,
         },
         computed:{
             lastTime:function(){
