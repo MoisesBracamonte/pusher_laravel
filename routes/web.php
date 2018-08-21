@@ -22,3 +22,5 @@ Route::get('/home', 'HomeController@index')->name('home');
 Route::get('/api/conversations','ConversationController@index');
 Route::get('/api/messages','MessageController@index');
 Route::post('/api/messages','MessageController@store');
+Route::get('/profile','ProfileController@edit')->name('profile');
+Route::match(['PUT','PATCH'],'/profile','ProfileController@update')->name('update_profile');

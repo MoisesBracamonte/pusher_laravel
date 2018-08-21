@@ -19,6 +19,7 @@ Vue.component('contactlist-component', require('./components/ContactListComponen
 Vue.component('sidelist-component', require('./components/SideListComponent.vue'));
 Vue.component('conversacion-component', require('./components/ConversacionComponent.vue'));
 Vue.component('messenger-component', require('./components/MessengerComponent.vue'));
+Vue.component('profile-component', require('./components/ProfileComponent.vue'));
 const app = new Vue({
     el: '#app'
 });
