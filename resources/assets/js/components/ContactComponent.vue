@@ -2,7 +2,7 @@
 <div :class="`list-group-item ${variant}`">
     <div class="row inf-cont mt-1 ">
         <div class="col-md-3 col-sm-3">
-            <img src="https://picsum.photos/200/300" class="rounded-circle img-cont" alt="">
+            <img :src="conversation.image_perfil" class="rounded-circle img-cont" alt="">
         </div>
         <div class="col-md-6  col-sm-6 d-none d-md-block">
             <span :class="[conversation.online ? 'text-success' : 'text-danger']">&#8226;</span>

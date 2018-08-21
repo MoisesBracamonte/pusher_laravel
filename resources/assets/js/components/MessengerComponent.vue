@@ -16,6 +16,8 @@
           v-if="selectConversation"
           :messages="messages"
           :contact-id="selectConversation.contact_id"
+          :image-contact="selectConversation.image_perfil"
+          :image-user="imageUser"
           v-on:createdMessage = "addMessage($event)"
         ></conversacion-component>
     </div>
@@ -23,6 +25,7 @@
         <sidelist-component
         v-if="selectConversation"
         :contact-name="selectConversation.contact_name"
+        :image-perfil="selectConversation.image_perfil"
         ></sidelist-component>
     </div>
 </div>
@@ -32,7 +35,8 @@ import ContactListComponent from './ContactListComponent.vue';
 import SideListComponent from './SideListComponent.vue';
 export default {
   props : {
-    userId : Number
+    userId : Number,
+    imageUser:String,
   },
   components:{
     ContactListComponent : 'contactlist-component',

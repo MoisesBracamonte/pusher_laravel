@@ -6,7 +6,8 @@
        class="list-complete-item"
         v-for="(message,key) in messages"
         :key="key"
-        :written-by-me='message.written_by_me'>
+        :written-by-me='message.written_by_me'
+        :my-image="message.written_by_me ? imageUser : imageContact">
         {{message.content}}
         </MessageComponent>
         </transition-group>
@@ -39,7 +40,9 @@ export default {
     },
     props:{
         messages:Array,
-        contactId :Number
+        contactId :Number,
+        imageContact:String,
+        imageUser:String
     },
     data(){
         return{

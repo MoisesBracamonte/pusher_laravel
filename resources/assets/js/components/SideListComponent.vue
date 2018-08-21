@@ -1,7 +1,7 @@
 <template>
 <div>
   <div class="list-group-item text-center">
-      <img src="https://picsum.photos/200/300" class="rounded-circle img-cont-right" alt="">
+      <img :src="imagePerfil" class="rounded-circle img-cont-right" alt="">
       <small id="" class="form-text text-muted">{{ contactName }}</small>
   </div>
   <div class="list-group-item text-center">
@@ -15,7 +15,8 @@
 <script>
 export default {
   props:{
-      contactName:String
+      contactName:String,
+      imagePerfil:String
   }
 }
 </script>

@@ -73932,7 +73932,12 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", { class: "list-group-item " + _vm.variant }, [
     _c("div", { staticClass: "row inf-cont mt-1 " }, [
-      _vm._m(0),
+      _c("div", { staticClass: "col-md-3 col-sm-3" }, [
+        _c("img", {
+          staticClass: "rounded-circle img-cont",
+          attrs: { src: _vm.conversation.image_perfil, alt: "" }
+        })
+      ]),
       _vm._v(" "),
       _c("div", { staticClass: "col-md-6  col-sm-6 d-none d-md-block" }, [
         _c(
@@ -73963,19 +73968,7 @@ var render = function() {
     ])
   ])
 }
-var staticRenderFns = [
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col-md-3 col-sm-3" }, [
-      _c("img", {
-        staticClass: "rounded-circle img-cont",
-        attrs: { src: "https://picsum.photos/200/300", alt: "" }
-      })
-    ])
-  }
-]
+var staticRenderFns = []
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -74040,9 +74033,10 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
-  props: {
-    contactName: String
-  }
+    props: {
+        contactName: String,
+        imagePerfil: String
+    }
 });
 
 /***/ }),
@@ -74057,7 +74051,7 @@ var render = function() {
     _c("div", { staticClass: "list-group-item text-center" }, [
       _c("img", {
         staticClass: "rounded-circle img-cont-right",
-        attrs: { src: "https://picsum.photos/200/300", alt: "" }
+        attrs: { src: _vm.imagePerfil, alt: "" }
       }),
       _vm._v(" "),
       _c("small", { staticClass: "form-text text-muted", attrs: { id: "" } }, [
@@ -74571,6 +74565,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
 
 
 
@@ -74580,7 +74575,9 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     props: {
         messages: Array,
-        contactId: Number
+        contactId: Number,
+        imageContact: String,
+        imageUser: String
     },
     data: function data() {
         return {
@@ -74697,7 +74694,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    writtenByMe: Boolean
+    writtenByMe: Boolean,
+    myImage: String
   }
 
 });
@@ -74715,7 +74713,7 @@ var render = function() {
       ? _c("div", [
           _c("img", {
             staticClass: "rounded-circle img-msg m-1",
-            attrs: { src: "https://picsum.photos/200/301", alt: "" }
+            attrs: { src: _vm.myImage, alt: "" }
           })
         ])
       : _vm._e(),
@@ -74730,7 +74728,7 @@ var render = function() {
       ? _c("div", [
           _c("img", {
             staticClass: "rounded-circle img-msg m-1",
-            attrs: { src: "https://picsum.photos/200/301", alt: "" }
+            attrs: { src: _vm.myImage, alt: "" }
           })
         ])
       : _vm._e()
@@ -74768,7 +74766,12 @@ var render = function() {
               {
                 key: key,
                 staticClass: "list-complete-item",
-                attrs: { "written-by-me": message.written_by_me }
+                attrs: {
+                  "written-by-me": message.written_by_me,
+                  "my-image": message.written_by_me
+                    ? _vm.imageUser
+                    : _vm.imageContact
+                }
               },
               [_vm._v("\n        " + _vm._s(message.content) + "\n        ")]
             )
@@ -74934,12 +74937,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
+//
+//
+//
 
 
 
 /* harmony default export */ __webpack_exports__["default"] = ({
   props: {
-    userId: Number
+    userId: Number,
+    imageUser: String
   },
   components: {
     ContactListComponent: 'contactlist-component',
@@ -75095,7 +75102,9 @@ var render = function() {
           ? _c("conversacion-component", {
               attrs: {
                 messages: _vm.messages,
-                "contact-id": _vm.selectConversation.contact_id
+                "contact-id": _vm.selectConversation.contact_id,
+                "image-contact": _vm.selectConversation.image_perfil,
+                "image-user": _vm.imageUser
               },
               on: {
                 createdMessage: function($event) {
@@ -75116,7 +75125,10 @@ var render = function() {
       [
         _vm.selectConversation
           ? _c("sidelist-component", {
-              attrs: { "contact-name": _vm.selectConversation.contact_name }
+              attrs: {
+                "contact-name": _vm.selectConversation.contact_name,
+                "image-perfil": _vm.selectConversation.image_perfil
+              }
             })
           : _vm._e()
       ],
