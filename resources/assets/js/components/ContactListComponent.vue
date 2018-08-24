@@ -1,7 +1,7 @@
 <template>
   <div>
       <ContactComponent
-        v-for="(conversation,key) in conversations"
+        v-for="(conversation,key) in conversationsFiltered"
         :key="key"
         :variant="''"
         :conversation="conversation"
@@ -14,15 +14,17 @@
 import axios from 'axios';
 import ContactComponent from './ContactComponent';
 export default {
-  props:{
-    conversations:Array
-  },
   components : {
     ContactComponent,
   },
   methods:{
     selectConversation:function(conversation){
-      this.$emit('selectConversation',conversation);
+      this.$store.dispatch('getMessages',conversation)
+    }
+  },
+  computed:{
+    conversationsFiltered:function(){
+      return this.$store.getters.conversationsFilter;
     }
   }
 }

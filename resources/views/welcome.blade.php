@@ -81,7 +81,6 @@
                 <div class="title m-b-md">
                     App Messenger
                 </div>
-
                 <div class="links">
                     <a href="">Curso UDEMY</a>
                     <a href="">Repositorio git </a>

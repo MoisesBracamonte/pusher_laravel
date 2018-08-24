@@ -7,7 +7,7 @@
         v-for="(message,key) in messages"
         :key="key"
         :written-by-me='message.written_by_me'
-        :my-image="message.written_by_me ? imageUser : imageContact">
+        :my-image="message.written_by_me ? getUser.image_perfil : selectedConversation.image_perfil">
         {{message.content}}
         </MessageComponent>
         </transition-group>
@@ -38,15 +38,20 @@ export default {
     components:{
         MessageComponent
     },
-    props:{
-        messages:Array,
-        contactId :Number,
-        imageContact:String,
-        imageUser:String
-    },
     data(){
         return{
             message:''
+        }
+    },
+    computed:{
+        messages(){
+            return this.$store.state.messages;
+        },
+        selectedConversation(){
+            return this.$store.state.selectConversation;
+        },
+        getUser(){
+            return this.$store.state.user
         }
     },
     watch:{
@@ -56,22 +61,15 @@ export default {
             }, 200);
         }
     },
+    mounted(){
+      console.log(this.getUser);
+        
+    },
     methods:{
         postMessage(){
             let myForm = document.getElementById('form-message');
-            let formData = new FormData(myForm);
-            formData.append('to_id',this.contactId);
-            axios.post(`/api/messages`,formData)
-            .then(response=>{
-                if(response.statusText == 'OK'){
-                    let m = response.data;
-                    this.message='';
-                    m.written_by_me = true;
-                    this.$emit('createdMessage',m)
-                }
-            }).catch(error=>{
-                console.log(error);
-            })
+            this.$store.dispatch('postMessage',myForm)
+            this.message='';
         },
         scrollBottom:function(){
             let element = document.querySelector('.conver');

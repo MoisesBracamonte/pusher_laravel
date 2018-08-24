@@ -15,6 +15,7 @@ class MessageController extends Controller
      */
     public function index(Request $request)
     {
+         
         $userId = Auth::user()->id;
         $contactId = $request->contact_id;
         $messages = Message::select(
